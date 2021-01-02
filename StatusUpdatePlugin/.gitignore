@@ -112,4 +112,4 @@ buildNumber.properties
 # Common working directory
 run/
 
-!.idea/runConfigurations/
+!.idea/runConfigurations/StatusUpdate_build.xml
