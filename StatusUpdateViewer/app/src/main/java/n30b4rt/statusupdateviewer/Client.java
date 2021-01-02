@@ -28,8 +28,8 @@ public class Client {
                 socket = new Socket(address, 4242);
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 writer = new PrintWriter(socket.getOutputStream());
-                callback.OnConnectResult(null);
-            } catch (Exception e) { callback.OnConnectResult(e); }
+                callback.PossibleException(null);
+            } catch (Exception e) { callback.PossibleException(e); }
         });
         t.start();
     }
@@ -49,15 +49,18 @@ public class Client {
         }
     }
 
-    public boolean stop() {
-        try {
-            reader.close();
-            writer.close();
-            socket.close();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void stop(IFuncCallbacks callbacks) {
+        Thread t = new Thread(() -> {
+            try {
+                reader.close();
+                writer.close();
+                socket.close();
+                callbacks.PossibleException(null);
+            } catch (Exception e) {
+                callbacks.PossibleException(e);
+            }
+        });
+        t.start();
     }
 
     private static Client instance = null;

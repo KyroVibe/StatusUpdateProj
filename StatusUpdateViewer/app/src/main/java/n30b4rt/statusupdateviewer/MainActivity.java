@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
             String[] perms = {"android.permission.INTERNET"};
             int permsRequestCode = 200;
             requestPermissions(perms, permsRequestCode);
-        } else {
-            toast("Perms already granted");
         }
 
         ipField = (EditText) findViewById(R.id.ip_input);
@@ -41,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 connectButton.setText(address);
                 // toast("\"" + address + "\"");
                 Client.getInstance().start(address, MainActivity.this::onConnectResult);
+                connectButton.setEnabled(false);
             }
         });
     }
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 200) {
-            toast("Goodie");
+            // toast("Goodie");
         }
     }
 
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         if (e != null) {
             toast(e.toString());
         } else {
-            toast("All good");
+            // toast("All good");
             OpenInfoActivity();
         }
     }

@@ -2,6 +2,7 @@ package n30b4rt.statusupdateviewer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -30,7 +31,7 @@ public class InfoActivity extends AppCompatActivity {
         disconnectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Client.getInstance().stop();
+                Client.getInstance().stop(InfoActivity.this::OnDisconnectResult);
             }
         });
 
@@ -61,5 +62,10 @@ public class InfoActivity extends AppCompatActivity {
             }
         });
         t.start();
+    }
+
+    public void OnDisconnectResult(Exception e) {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }
