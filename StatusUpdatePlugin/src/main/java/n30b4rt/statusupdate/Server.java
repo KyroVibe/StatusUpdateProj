@@ -54,13 +54,13 @@ public class Server {
                                 break;
 
                             msg = reader.readLine();
-                            System.out.println("Received message: \"" + msg + "\"");
+                            // System.out.println("Received message: \"" + msg + "\"");
                             switch (msg.toLowerCase()) {
                                 case "status":
                                     Status s = new Status();
                                     s.PlayerCount = Bukkit.getOnlinePlayers().size();
                                     String json = new Gson().toJson(s, Status.class);
-                                    System.out.println(json);
+                                    // System.out.println(json);
                                     writer.write(json + "\n");
                                     writer.flush();
                                     break;
@@ -70,13 +70,13 @@ public class Server {
                         reader.close();
                         cli.close();
                     } catch (Exception e) {
-                        System.out.println("Exception in client server. Abandoning client.");
+                        // System.out.println("Exception in client server. Abandoning client.");
                     }
                 });
                 serverThread.start();
                 servers.add(serverThread);
             } catch (Exception e) {
-                System.out.println("Exception while starting client server. Abandoning client.");
+                // System.out.println("Exception while starting client server. Abandoning client.");
             }
         }
     }

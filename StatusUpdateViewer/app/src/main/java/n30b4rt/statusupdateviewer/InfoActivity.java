@@ -48,7 +48,7 @@ public class InfoActivity extends AppCompatActivity {
     private void toast(String s) {
         this.runOnUiThread(() -> {
             String s2 = s;
-            Toast.makeText(this, s2, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, s2, Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -56,6 +56,7 @@ public class InfoActivity extends AppCompatActivity {
         Thread t = new Thread(() -> {
             Pair<Status, Exception> result = Client.getInstance().getStatus();
             if (result.first == null) {
+                toast("Server Disconnected");
                 OnDisconnectResult(result.second);
             } else {
                 playerCount.setText("Player Count\n" + result.first.PlayerCount);

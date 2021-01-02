@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String address = ipField.getText().toString();
-                connectButton.setText(address);
-                // toast("\"" + address + "\"");
                 Client.getInstance().start(address, MainActivity.this::onConnectResult);
                 connectButton.setEnabled(false);
             }
