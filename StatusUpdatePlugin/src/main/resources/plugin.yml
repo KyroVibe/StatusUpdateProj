@@ -1,0 +1,6 @@
+name: StatusUpdate
+version: ${project.version}
+main: n30b4rt.statusupdate.StatusUpdate
+api-version: 1.16
+authors: [ n30b4rt ]
+description: Uploads status of the server

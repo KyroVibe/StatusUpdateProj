@@ -1,0 +1,13 @@
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\bin\Debug\netcoreapp3.1\StatusUpdateClient.exe
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\bin\Debug\netcoreapp3.1\StatusUpdateClient.deps.json
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\bin\Debug\netcoreapp3.1\StatusUpdateClient.runtimeconfig.json
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\bin\Debug\netcoreapp3.1\StatusUpdateClient.runtimeconfig.dev.json
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\bin\Debug\netcoreapp3.1\StatusUpdateClient.dll
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\bin\Debug\netcoreapp3.1\StatusUpdateClient.pdb
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\obj\Debug\netcoreapp3.1\StatusUpdateClient.csprojAssemblyReference.cache
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\obj\Debug\netcoreapp3.1\StatusUpdateClient.AssemblyInfoInputs.cache
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\obj\Debug\netcoreapp3.1\StatusUpdateClient.AssemblyInfo.cs
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\obj\Debug\netcoreapp3.1\StatusUpdateClient.csproj.CoreCompileInputs.cache
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\obj\Debug\netcoreapp3.1\StatusUpdateClient.dll
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\obj\Debug\netcoreapp3.1\StatusUpdateClient.pdb
+C:\Users\hunte\source\repos\StatusUpdateClient\StatusUpdateClient\obj\Debug\netcoreapp3.1\StatusUpdateClient.genruntimeconfig.cache
