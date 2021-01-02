@@ -56,7 +56,7 @@ public class InfoActivity extends AppCompatActivity {
         Thread t = new Thread(() -> {
             Pair<Status, Exception> result = Client.getInstance().getStatus();
             if (result.first == null) {
-                toast(result.second.toString());
+                OnDisconnectResult(result.second);
             } else {
                 playerCount.setText("Player Count\n" + result.first.PlayerCount);
             }
