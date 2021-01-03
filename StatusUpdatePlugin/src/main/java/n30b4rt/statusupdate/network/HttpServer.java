@@ -26,7 +26,7 @@ public class HttpServer {
 
     public boolean start() {
         try {
-            listener = new ServerSocket(8080);
+            listener = new ServerSocket(80);
             listenerThread = new Thread(this::serve);
             listenerThread.start();
             return true;
