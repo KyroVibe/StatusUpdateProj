@@ -1,4 +1,4 @@
-package n30b4rt.statusupdate;
+package n30b4rt.statusupdate.network;
 
 import com.google.gson.Gson;
 import n30b4rt.Status;
@@ -10,15 +10,14 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class Server {
+public class AppServer {
 
     private ServerSocket serverSocket;
     private Thread listener;
     private ArrayList<Thread> servers;
 
-    private Server() { }
+    private AppServer() { }
 
     public boolean start(int portNumber) {
         try {
@@ -96,10 +95,10 @@ public class Server {
         }
     }
 
-    private static Server instance = null;
-    public static Server getInstance() {
+    private static AppServer instance = null;
+    public static AppServer getInstance() {
         if (instance == null)
-            instance = new Server();
+            instance = new AppServer();
         return instance;
     }
 }
