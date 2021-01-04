@@ -10,19 +10,36 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HttpServer {
 
-    public static final String HTML_PREFIX = "<!DOCTYPE html><html><body>";
-    public static final String HTML_SUFFIX = "</body></html>";
+    public static final String HTML_PREFIX = "<!DOCTYPE html><html>";
+    public static final String HTML_SUFFIX = "</html>";
     public static final java.time.format.DateTimeFormatter HTTP_TIME_FORMAT =
         DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss z");
+
+    private HashMap<String, File> files;
 
     private ServerSocket listener;
     private Thread listenerThread;
     private ArrayList<Thread> servers;
 
-    private HttpServer() { }
+    private HttpServer() {
+        files = new HashMap<String, File>();
+        // Register Defaults
+        files.put("404", new File("404", "text/html",
+            HTML_PREFIX + "File not found" + HTML_SUFFIX));
+        files.put("501", new File("501", "text/html",
+            HTML_PREFIX + "That too complex for me bruv" + HTML_SUFFIX));
+    }
+
+    public boolean registerFile(File file) {
+        if (files.containsKey(file.getFileName()))
+            return false;
+        files.put(file.getFileName(), file);
+        return true;
+    }
 
     public boolean start() {
         try {
@@ -62,23 +79,26 @@ public class HttpServer {
                                 break;
                             // System.out.println("Request Read");
                             String[] header = req[0].split(" ");
-                            String responseFile = HTML_PREFIX;
-                            String status;
+                            // String responseFile = HTML_PREFIX;
+                            File responseFile = files.get("501");
+                            String status = " 501 Not Implemented";
                             if (header[0].equals("GET")) {
-                                if (header[1].endsWith("/")) {
+                                if (header[1].equals("/")) {
+                                    System.out.println("Req: " + header[1]);
                                     status = " 200 OK";
-                                    responseFile += "<h2>Player Count: " + Bukkit.getOnlinePlayers().size() + "</h2><ul>";
-                                    for (Player p : Bukkit.getOnlinePlayers()) {
-                                        responseFile += "<li>" + p.getDisplayName() + "</li>";
-                                    }
-                                    responseFile += "</ul>" + HTML_SUFFIX;
+                                    responseFile = new File("/", "text/html", genIndex());
+                                } else if (files.containsKey(header[1])) {
+                                    status = " 200 OK";
+                                    responseFile = files.get(header[1]);
                                 } else {
                                     status = " 404 Not Found";
-                                    responseFile += "404" + HTML_SUFFIX;
+                                    // responseFile += "404" + HTML_SUFFIX;
+                                    responseFile = files.get("404");
+                                    System.out.println("404: \"" + header[1] + "\"");
                                 }
+                                // System.out.println("Method: " + header[0]);
                             } else {
-                                status = " 501 Not Implemented";
-                                responseFile += "501" + HTML_SUFFIX;
+                                System.out.println("501: " + header[0]);
                             }
                             writeResponse(writer, header[2], status, responseFile);
                         }
@@ -108,6 +128,17 @@ public class HttpServer {
         }
     }
 
+    private String genIndex() {
+        String html =
+            HTML_PREFIX + "<head><link rel=\"stylesheet\" href=\"styles.css\"></head>" +
+                "<body><h2>Player Count: " + Bukkit.getOnlinePlayers().size() + "</h2>";
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            html += "<h4>" + p.getDisplayName() + "</h4>";
+        }
+        html += "</body>" + HTML_SUFFIX;
+        return html;
+    }
+
     private String[] readRequest(BufferedReader reader) {
         // System.out.println("Reading request...");
         ArrayList<String> lines = new ArrayList<String>();
@@ -129,22 +160,24 @@ public class HttpServer {
         return lines.toArray(res);
     }
 
-    public void writeResponse(PrintWriter headerWriter, String protocol, String status, String file) {
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("GMT"));
-        String date = now.format(HTTP_TIME_FORMAT);
-
+    public void writeResponse(PrintWriter headerWriter, String protocol, String status, File file) {
         headerWriter.println(protocol + status);
         headerWriter.println("Server: StatusUpdate v1.0-Snapshot");
-        headerWriter.println("Date: " + date);
-        headerWriter.println("Content-Type: text/html; charset=utf-8");
-        headerWriter.println("Content-Length: " + file.length());
+        headerWriter.println("Date: " + getDate());
+        headerWriter.println("Content-Type: " + file.getType() + "; charset=utf-8");
+        headerWriter.println("Content-Length: " + file.getSize());
         headerWriter.println();
         headerWriter.flush();
 
-        headerWriter.write(file.toCharArray(), 0, file.length());
+        headerWriter.write(file.getData(), 0, file.getSize());
         headerWriter.flush();
 
         // System.out.println("Response Written");
+    }
+
+    public static String getDate() {
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("GMT"));
+        return now.format(HTTP_TIME_FORMAT);
     }
 
     public enum FileTypes {

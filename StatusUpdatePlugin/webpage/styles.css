@@ -1,0 +1,16 @@
+body {
+    color: white;
+    text-align: center;
+    padding-top: 125px;
+    background-color: black;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+h2 {
+    font-size: 60px;
+}
+h4 {
+    font-size: 30px;
+}
+ul {
+    list-style-type: none;
+}
